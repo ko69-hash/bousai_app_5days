@@ -14,7 +14,7 @@
 <div class="page-card">
   <div class="panel-inner">
     <div class="weather-header-row">
-      <div class="panel-title" style="margin: 0;">
+      <div class="panel-title">
         <span class="title-icon">🌤️</span>
         <h2>青森市 気象警報・注意報</h2>
       </div>
@@ -35,7 +35,7 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    const map = L.map('shelterMap').setView([35.3390, 139.4903], 12);
+    const map = L.map('shelterMap').setView([40.8244, 140.7400], 12);
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '© OpenStreetMap contributors',
@@ -57,6 +57,18 @@ document.addEventListener('DOMContentLoaded', function() {
     function updateWeatherContent(data) {
         const weatherContent = document.getElementById('weatherContent');
 
+      function getWarningLevel(code) {
+        const levels = {
+          '32': 5, '33': 5, '35': 5, '36': 5, '37': 5, '38': 5, '39': 5,
+          '43': 4, '48': 4, '49': 4,
+          '03': 3, '04': 3, '05': 3, '06': 3, '07': 3, '08': 3, '09': 3,
+          '10': 2, '12': 2, '13': 2, '14': 2, '15': 2, '16': 2,
+          '17': 2, '18': 2, '19': 2, '20': 2, '21': 2, '22': 2,
+          '23': 2, '24': 2, '25': 2, '26': 2, '27': 2, '29': 2
+        };
+        return levels[code] || 1;
+      }
+
         if (data.error) {
             weatherContent.innerHTML = '<p>気象情報の取得に失敗しました</p>';
             return;
@@ -64,9 +76,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
         let warningsHtml = '';
         if (data.warnings && data.warnings.length > 0) {
-            warningsHtml = '<ul>';
+          warningsHtml = '<ul class="warning-list">';
             data.warnings.forEach(warning => {
-                warningsHtml += `<li>${warning.name}（${warning.status}）</li>`;
+            const level = getWarningLevel(warning.code);
+            warningsHtml += `<li class="warning-item level-${level}"><span class="level-label">警戒レベル ${level}</span> <strong>${warning.name}</strong>（${warning.status}）</li>`;
             });
             warningsHtml += '</ul>';
         } else {

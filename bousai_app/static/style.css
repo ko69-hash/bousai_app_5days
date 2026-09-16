@@ -1,0 +1,492 @@
+:root {
+  --level5-color: #0C000C; /* 災害発生情報：黒 */
+  --level4-color: #AA00AA; /* 避難勧告・避難指示(緊急)：紫 */
+  --level3-color: #FF2800; /* 避難準備・高齢者等避難開始：赤 */
+  --level2-color: #F2E700; /* 洪水注意報・大雨注意報等：黄 */
+  --level1-color: #FFFFFF; /* 早期注意情報：白 */
+
+  --background-color: #f4f7fb;
+  --main-color: #174a96;
+  --main-color-dark: #10366e;
+  --accent-color: #087f5b;
+  --surface-color: #ffffff;
+  --surface-muted: #eef3f8;
+  --border-color: #b8c7d9;
+  --text-color: #172333;
+  --muted-text-color: #405268;
+  --focus-color: #005fcc;
+  --error-color: #a51c30;
+  --shadow: 0 4px 14px rgba(23, 53, 88, 0.14);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  overflow-x: hidden;
+}
+
+body {
+  margin: 0;
+  background: var(--background-color);
+  color: var(--text-color);
+  font-family: "Hiragino Sans", "Yu Gothic", "Meiryo", sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+img,
+iframe,
+video {
+  max-width: 100%;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+button,
+a,
+select,
+input[type="submit"],
+input[type="button"] {
+  min-width: 44px;
+  min-height: 44px;
+}
+
+button,
+a,
+select,
+input[type="submit"],
+input[type="button"] {
+  -webkit-tap-highlight-color: transparent;
+}
+
+:focus-visible {
+  outline: 3px solid var(--focus-color);
+  outline-offset: 3px;
+}
+
+a {
+  color: var(--main-color-dark);
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+}
+
+.topbar {
+  min-height: 72px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px max(18px, calc((100% - 960px) / 2));
+  background: var(--main-color);
+  box-shadow: 0 2px 8px rgba(16, 54, 110, 0.25);
+}
+
+.brand {
+  margin: 0;
+  color: #ffffff;
+  font-size: 1.75rem;
+  line-height: 1.2;
+  font-weight: 800;
+}
+
+.menu-button {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  color: #ffffff;
+  background: transparent;
+  border: 2px solid transparent;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.menu-button:hover,
+.menu-button:focus-visible {
+  background: var(--main-color-dark);
+}
+
+.menu-icon,
+.menu-icon::before,
+.menu-icon::after,
+.menu-icon span {
+  display: block;
+  width: 26px;
+  height: 3px;
+  background: currentColor;
+  border-radius: 2px;
+}
+
+.menu-icon {
+  position: relative;
+}
+
+.menu-icon::before,
+.menu-icon::after {
+  position: absolute;
+  left: 0;
+  content: "";
+}
+
+.menu-icon::before {
+  top: -9px;
+}
+
+.menu-icon::after {
+  top: 9px;
+}
+
+.main-shell {
+  width: min(100% - 32px, 960px);
+  margin: 28px auto 56px;
+}
+
+.nav-panel {
+  display: none;
+  flex-wrap: wrap;
+  gap: 8px;
+  max-width: 960px;
+  margin: 12px auto 0;
+  padding: 8px;
+  background: var(--main-color-dark);
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+}
+
+.nav-panel.is-open {
+  display: flex;
+}
+
+.nav-panel a,
+.tab-bar a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 8px 16px;
+  color: #ffffff;
+  border-radius: 6px;
+  text-decoration: none;
+}
+
+.nav-panel a:hover,
+.nav-panel a:focus-visible,
+.tab-bar a:hover,
+.tab-bar a[aria-current="page"] {
+  background: #ffffff;
+  color: var(--main-color-dark);
+}
+
+.tab-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  width: 100%;
+  background: var(--main-color);
+  border-bottom: 4px solid var(--main-color-dark);
+}
+
+.page-card,
+.card,
+.alert-box,
+.notice-box {
+  margin-top: 20px;
+  background: var(--surface-color);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+.panel-inner,
+.card-inner {
+  padding: 26px 24px 24px;
+}
+
+.panel-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0 0 18px;
+  color: var(--main-color-dark);
+  font-size: 1.25rem;
+}
+
+.panel-title h2,
+.alert-box h2,
+.notice-box h2 {
+  margin: 0;
+  font-size: 1.35rem;
+  line-height: 1.4;
+}
+
+.title-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 32px;
+  width: 32px;
+  height: 32px;
+  font-size: 1.35rem;
+}
+
+.map-box {
+  width: 100%;
+  height: 420px;
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  overflow: hidden;
+  background: #dceef7;
+}
+
+.weather-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 18px;
+}
+
+.weather-header-row .panel-title {
+  margin: 0;
+}
+
+.weather-meta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 8px 12px;
+  color: #07583f;
+  background: #d9f1e7;
+  border: 1px solid #75b99f;
+  border-radius: 6px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.weather-content {
+  padding: 18px;
+  color: var(--text-color);
+  background: var(--surface-muted);
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+}
+
+.weather-city {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+  color: var(--main-color-dark);
+  font-size: 1.2rem;
+  font-weight: 800;
+}
+
+.weather-status,
+.weather-detail {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.weather-status {
+  margin-bottom: 10px;
+  color: #07583f;
+  font-size: 1.05rem;
+  font-weight: 800;
+}
+
+.weather-status .check {
+  font-size: 1.3rem;
+}
+
+.weather-detail {
+  margin-top: 8px;
+  color: var(--muted-text-color);
+}
+
+.weather-detail .dot {
+  color: var(--main-color);
+}
+
+.warning-list {
+  display: grid;
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.warning-item,
+.alert-box,
+.notice-box {
+  border-left: 10px solid var(--main-color);
+}
+
+.warning-item {
+  padding: 14px 16px;
+  color: var(--text-color);
+  background: var(--surface-color);
+  border-top: 1px solid var(--border-color);
+  border-right: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--border-color);
+  border-radius: 6px;
+}
+
+.warning-item strong,
+.level-label {
+  display: inline-block;
+  font-size: 1.15rem;
+  font-weight: 800;
+}
+
+.level-5 { border-left-color: var(--level5-color); }
+.level-4 { border-left-color: var(--level4-color); }
+.level-3 { border-left-color: var(--level3-color); }
+.level-2 { border-left-color: var(--level2-color); }
+.level-1 { border-left-color: var(--main-color); }
+
+.level-5 .level-label,
+.level-4 .level-label,
+.level-3 .level-label {
+  color: #ffffff;
+  padding: 3px 8px;
+  border-radius: 4px;
+}
+
+.level-5 .level-label { background: var(--level5-color); }
+.level-4 .level-label { background: var(--level4-color); }
+.level-3 .level-label { background: var(--level3-color); }
+.level-2 .level-label {
+  color: #1b2100;
+  background: var(--level2-color);
+}
+.level-1 .level-label {
+  color: var(--text-color);
+  background: var(--level1-color);
+  border: 2px solid var(--border-color);
+}
+
+.button,
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 10px 18px;
+  color: #ffffff;
+  background: var(--main-color);
+  border: 2px solid var(--main-color);
+  border-radius: 6px;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.button:hover,
+.button:focus-visible,
+.btn:hover,
+.btn:focus-visible {
+  background: var(--main-color-dark);
+  border-color: var(--main-color-dark);
+}
+
+.button--primary,
+.btn--primary {
+  color: #ffffff;
+  background: var(--accent-color);
+  border-color: var(--accent-color);
+  box-shadow: 0 2px 0 #04553d;
+}
+
+.button--primary:hover,
+.button--primary:focus-visible,
+.btn--primary:hover,
+.btn--primary:focus-visible {
+  background: #07583f;
+  border-color: #07583f;
+}
+
+.form-control,
+.input,
+.select,
+textarea,
+input[type="text"],
+input[type="password"],
+input[type="email"] {
+  display: block;
+  width: 100%;
+  min-height: 48px;
+  padding: 10px 12px;
+  color: var(--text-color);
+  background: #ffffff;
+  border: 2px solid #71849b;
+  border-radius: 6px;
+}
+
+.form-control:focus,
+.input:focus,
+.select:focus,
+textarea:focus,
+input:focus {
+  border-color: var(--focus-color);
+  outline: 3px solid rgba(0, 95, 204, 0.2);
+}
+
+.error-message {
+  margin: 12px 0;
+  padding: 12px 14px;
+  color: #7b1022;
+  background: #fff0f1;
+  border: 2px solid var(--error-color);
+  border-radius: 6px;
+  font-weight: 700;
+}
+
+@media (max-width: 640px) {
+  .topbar {
+    padding: 12px 16px;
+  }
+
+  .brand {
+    font-size: 1.5rem;
+  }
+
+  .main-shell {
+    width: min(100% - 24px, 960px);
+    margin-top: 18px;
+  }
+
+  .panel-inner,
+  .card-inner {
+    padding: 18px 16px 16px;
+  }
+
+  .weather-header-row {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .weather-meta {
+    width: fit-content;
+  }
+
+  .map-box {
+    height: 320px;
+  }
+
+  .panel-title h2,
+  .alert-box h2,
+  .notice-box h2 {
+    font-size: 1.25rem;
+  }
+}
