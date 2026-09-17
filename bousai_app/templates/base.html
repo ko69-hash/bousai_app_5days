@@ -5,279 +5,44 @@
   <title>{% block title %}防災アプリ{% endblock %}</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-  <style>
-    :root {
-      --primary-blue: #0a4d8f;
-      --primary-blue-dark: #083d73;
-      --background: #f0f2f5;
-      --card: #f7f8f9;
-      --card-border: #dfe6ee;
-      --text: #1f2a37;
-      --muted: #5c6775;
-      --success: #2ea44f;
-      --success-soft: #dff5e6;
-      --warning: #f7b500;
-      --danger: #d64646;
-      --shadow: 0 6px 16px rgba(15, 38, 62, 0.08);
-    }
-
-    * { box-sizing: border-box; }
-
-    body {
-      margin: 0;
-      background: var(--background);
-      color: var(--text);
-      font-family: "Segoe UI", "Hiragino Sans", "Yu Gothic", sans-serif;
-      line-height: 1.5;
-    }
-
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
-
-    .topbar {
-      background: linear-gradient(180deg, var(--primary-blue) 0%, var(--primary-blue-dark) 100%);
-      height: 72px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 32px;
-      box-shadow: 0 2px 8px rgba(8, 51, 94, 0.15);
-    }
-
-    .brand {
-      margin: 0;
-      color: white;
-      font-size: clamp(1.5rem, 2vw, 2.1rem);
-      font-weight: 700;
-      letter-spacing: 0.02em;
-    }
-
-    .menu-button {
-      background: transparent;
-      border: none;
-      color: white;
-      width: 42px;
-      height: 42px;
-      border-radius: 10px;
-      display: grid;
-      place-items: center;
-      cursor: pointer;
-      transition: background-color 0.2s ease;
-    }
-
-    .menu-button:hover {
-      background: rgba(255, 255, 255, 0.08);
-    }
-
-    .menu-icon {
-      width: 24px;
-      height: 18px;
-      position: relative;
-      display: block;
-    }
-
-    .menu-icon::before,
-    .menu-icon::after,
-    .menu-icon span {
-      content: "";
-      position: absolute;
-      left: 0;
-      width: 100%;
-      height: 2px;
-      background: white;
-      border-radius: 2px;
-    }
-
-    .menu-icon::before { top: 0; }
-    .menu-icon span { top: 8px; }
-    .menu-icon::after { bottom: 0; }
-
-    .main-shell {
-      max-width: 960px;
-      margin: 28px auto 56px;
-      padding: 0 18px;
-    }
-
-    .nav-panel {
-      display: none;
-      background: rgba(10, 77, 143, 0.96);
-      border-radius: 12px;
-      box-shadow: var(--shadow);
-      margin-top: 12px;
-      padding: 12px 16px;
-      flex-wrap: wrap;
-      gap: 12px;
-    }
-
-    .nav-panel.is-open {
-      display: flex;
-    }
-
-    .nav-panel a {
-      color: white;
-      font-weight: 600;
-      padding: 8px 10px;
-      border-radius: 8px;
-    }
-
-    .nav-panel a:hover {
-      background: rgba(255, 255, 255, 0.12);
-    }
-
-    .page-card {
-      background: rgba(255, 255, 255, 0.4);
-      border: 1px solid var(--card-border);
-      border-radius: 18px;
-      box-shadow: var(--shadow);
-      overflow: hidden;
-      margin-top: 20px;
-    }
-
-    .panel-inner {
-      padding: 26px 24px 24px;
-    }
-
-    .panel-title {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin: 0 0 18px;
-      color: var(--primary-blue-dark);
-      font-size: 1.05rem;
-    }
-
-    .title-icon {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 26px;
-      height: 26px;
-      font-size: 1.2rem;
-    }
-
-    .panel-title h2 {
-      margin: 0;
-      font-size: clamp(1.3rem, 2vw, 2rem);
-      font-weight: 700;
-    }
-
-    .map-box {
-      width: 100%;
-      height: 420px;
-      border-radius: 14px;
-      overflow: hidden;
-      border: 1px solid #d5dfe8;
-      background: #dceef7;
-    }
-
-    .weather-header-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      margin-bottom: 18px;
-    }
-
-    .weather-meta {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      color: var(--success);
-      font-weight: 700;
-      background: var(--success-soft);
-      padding: 8px 12px;
-      border-radius: 999px;
-      font-size: 0.95rem;
-    }
-
-    .weather-content {
-      padding: 18px 0 6px;
-      color: var(--text);
-    }
-
-    .weather-city {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-size: 1.1rem;
-      font-weight: 700;
-      margin-bottom: 16px;
-      color: var(--primary-blue-dark);
-    }
-
-    .weather-status {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      color: #1f8b4d;
-      font-weight: 700;
-      margin-bottom: 10px;
-      font-size: 1.02rem;
-    }
-
-    .weather-status .check {
-      color: var(--success);
-      font-size: 1.2rem;
-    }
-
-    .weather-detail {
-      color: var(--muted);
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 0.98rem;
-      margin-top: 8px;
-    }
-
-    .weather-detail .dot {
-      color: var(--primary-blue);
-      font-size: 1rem;
-    }
-
-    @media (max-width: 640px) {
-      .topbar {
-        padding: 0 18px;
-      }
-
-      .main-shell {
-        margin-top: 18px;
-        padding: 0 12px;
-      }
-
-      .panel-inner {
-        padding: 18px 16px 16px;
-      }
-
-      .weather-header-row {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-
-      .map-box {
-        height: 320px;
-      }
-    }
-  </style>
 </head>
 <body>
-  <header class="topbar">
-    <h1 class="brand">防災アプリ</h1>
+  <header class="hero">
+    <div class="hero-inner">
+      <p class="hero-kicker">防災・気象情報</p>
+      <h1 class="brand">防災アプリ</h1>
+      <p class="hero-location"><svg class="icon" aria-hidden="true"><use href="#icon-pin"></use></svg>青森市</p>
+      <div id="heroStatus" class="status-chip status-chip--safe" role="status">
+        <svg class="icon" aria-hidden="true"><use href="#icon-check"></use></svg>
+        <span>現在、警報・注意報はありません</span>
+      </div>
+    </div>
     <button class="menu-button" type="button" aria-label="メニューを開く" aria-expanded="false">
       <span class="menu-icon"><span></span></span>
     </button>
   </header>
 
-  <nav class="nav-panel" aria-label="メインメニュー">
-    <a href="/">ホーム</a>
-    <a href="/shelter_search">避難所検索</a>
-    <a href="/shelter_register">避難所登録</a>
-    <a href="/board">指示・発信ボード</a>
+  <svg class="icon-sprite" aria-hidden="true">
+    <symbol id="icon-pin" viewBox="0 0 24 24"><path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/></symbol>
+    <symbol id="icon-check" viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></symbol>
+    <symbol id="icon-map" viewBox="0 0 24 24"><path d="m9 18-6 3V6l6-3 6 3 6-3v15l-6 3-6-3Z"/><path d="M9 3v15M15 6v15"/></symbol>
+    <symbol id="icon-cloud" viewBox="0 0 24 24"><path d="M7 18h10a4 4 0 0 0 .7-7.94A6 6 0 0 0 6.1 8.7 4.75 4.75 0 0 0 7 18Z"/></symbol>
+    <symbol id="icon-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+    <symbol id="icon-chart" viewBox="0 0 24 24"><path d="M4 19V5M4 19h16"/><path d="m7 15 3-4 3 2 5-7"/></symbol>
+    <symbol id="icon-people" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><path d="M3 19a6 6 0 0 1 12 0M16 5a3 3 0 0 1 0 6M17 13a5 5 0 0 1 4 6"/></symbol>
+    <symbol id="icon-plan" viewBox="0 0 24 24"><path d="M5 4h14v16H5zM8 8h8M8 12h8M8 16h5"/></symbol>
+    <symbol id="icon-alert" viewBox="0 0 24 24"><path d="M12 4 21 20H3L12 4Z"/><path d="M12 9v5M12 17h.01"/></symbol>
+  </svg>
+
+  <nav class="nav-panel tab-bar" aria-label="メインメニュー">
+    <a class="tab-link" href="/"{% if request.path == '/' %} aria-current="page"{% endif %}>ホーム</a>
+    <a class="tab-link" href="/shelter_search"{% if request.path == '/shelter_search' %} aria-current="page"{% endif %}>避難所検索</a>
+    <a class="tab-link" href="/board"{% if request.path == '/board' %} aria-current="page"{% endif %}>お知らせ</a>
+    <a class="utility-link" href="/shelter_register">避難所登録</a>
     {% if session.logged_in %}
-      <a href="/logout">ログアウト{% if session.username %}（{{ session.username }}）{% endif %}</a>
+      <a class="utility-link" href="/logout">ログアウト{% if session.username %}（{{ session.username }}）{% endif %}</a>
     {% else %}
-      <a href="/login">ログイン</a>
+      <a class="utility-link" href="/login">ログイン</a>
     {% endif %}
   </nav>
 
